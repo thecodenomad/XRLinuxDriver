@@ -78,10 +78,6 @@ jobs:
 
       - name: Download Artifacts
         uses: actions/download-artifact@v4
-        with:
-          path: artifacts
-          pattern: xrealAirLinuxDriver-*
-          merge-multiple: true
 
 #      - name: Download Fedora Driver
 #        uses: actions/download-artifact@v4
@@ -110,14 +106,13 @@ jobs:
       - name: List folder contents
         run: |
           ls -al
-          ls -al artifacts/
           pwd
 
       - name: Create Latest Release
         if: ${{ !env.ACT }}
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "artifacts/*-latest.tar.gz,bin/xreal_driver_setup"
+          artifacts: "*-latest.tar.gz,bin/xreal_driver_setup"
           allowUpdates: true
           tag: latest
 
