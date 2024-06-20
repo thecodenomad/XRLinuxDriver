@@ -93,16 +93,16 @@ jobs:
       #########################
       # Create Latest Release #
       #########################
-#      - name: Checkout Code
-#        uses: actions/checkout@v3
+      - name: Checkout Code
+        uses: actions/checkout@v3
 
       - name: Create Latest Release
         if: ${{ !env.ACT }}
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "xrealAirLinuxDriver*.tar.gz"
+          artifacts: "xrealAirLinuxDriver-fedora-latest.tar.gz,xrealAirLinuxDriver-ubuntu-latest.tar.gz,xrealAirLinuxDriver-debian-latest.tar.gz,bin/xreal_driver_setup"
           allowUpdates: true
-          tag: ${{ github.ref_name }}
+          tag: latest
 
 #      - name: Add Tarball Artifact 
 #        if: ${{ !env.ACT }}
