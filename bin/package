@@ -48,6 +48,6 @@ sha256sum xrealAirLinuxDriver xreal_driver_config xreal_driver_uninstall > manif
 popd
 
 # bundle up the driver directory
-tar -zcvf xrealAirLinuxDriver.tar.gz $PACKAGE_DIR
+tar -cvf xrealAirLinuxDriver.tar $PACKAGE_DIR
 
 popd
