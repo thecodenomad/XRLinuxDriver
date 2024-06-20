@@ -59,19 +59,27 @@ jobs:
           # Build
           ./bin/package
 
-      - name: Add Tarball Artifact 
+      - name: Create ${{ matrix.container }} Latest Release
         if: ${{ !env.ACT }}
-        uses: actions/upload-artifact@v4
+        uses: ncipollo/release-action@v1
         with:
-          name: xrealAirLinuxDriver-${{matrix.container}}.tar.gz
-          path: build/xrealAirLinuxDriver.tar.gz
-          compression-level: 0
+          artifacts: "build/xrealAirLinuxDriver.tar.gz"
+          name: xrealAirLinuxDriver-${{matrix.container}}-latest.tar.gz
+          allowUpdates: true
 
-      - name: Add Driver Setup Script 
-        if: ${{ !env.ACT && matrix.container == 'fedora' }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: xreal_driver_setup
-          path: bin/xreal_driver_setup
-          compression-level: 0
+#      - name: Add Tarball Artifact 
+#        if: ${{ !env.ACT }}
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: xrealAirLinuxDriver-${{matrix.container}}.tar.gz
+#          path: build/xrealAirLinuxDriver.tar.gz
+#          compression-level: 0
+#
+#      - name: Add Driver Setup Script 
+#        if: ${{ !env.ACT && matrix.container == 'fedora' }}
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: xreal_driver_setup
+#          path: bin/xreal_driver_setup
+#          compression-level: 0
 
