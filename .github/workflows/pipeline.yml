@@ -71,24 +71,32 @@ jobs:
     runs-on: ubuntu-latest
     needs: [Builds]
     steps:
+
       ##################################
       # Download all created artifacts #
       ##################################
+
+      - name: Create Artifacts Folder
+        run: |
+          mkdir -p artifacts/
 
       - name: Download Fedora Driver
         uses: actions/download-artifact@v4
         with:
           name: xrealAirLinuxDriver-fedora-latest.tar.gz      
+          path: artifacts/
 
       - name: Download Ubuntu Driver
         uses: actions/download-artifact@v4
         with:
           name: xrealAirLinuxDriver-ubuntu-latest.tar.gz      
+          path: artifacts/
 
       - name: Download Debian Driver
         uses: actions/download-artifact@v4
         with:
           name: xrealAirLinuxDriver-debian-latest.tar.gz      
+          path: artifacts/
 
       #########################
       # Create Latest Release #
@@ -100,7 +108,7 @@ jobs:
         if: ${{ !env.ACT }}
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "xrealAirLinuxDriver-fedora-latest.tar.gz,xrealAirLinuxDriver-ubuntu-latest.tar.gz,xrealAirLinuxDriver-debian-latest.tar.gz,bin/xreal_driver_setup"
+          artifacts: "artifacts/*-latest.tar.gz,bin/xreal_driver_setup"
           allowUpdates: true
           tag: latest
 
