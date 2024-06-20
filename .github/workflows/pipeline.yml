@@ -18,10 +18,10 @@ jobs:
       fail-fast: true
       matrix:
         container:
-          - "fedora:latest"
-          - "ubuntu:latest"
+          - "fedora"
+          - "ubuntu"
 
-    container: ${{ matrix.container }}
+    container: ${{ matrix.container }}:latest
 
     steps:
       - name: Install Fedora Dependencies
@@ -62,8 +62,8 @@ jobs:
         if: ${{ !env.ACT }}
         uses: actions/upload-artifact@v4
         with:
-          name: xrealAirLinuxDriver.tar.gz
-          path: build/xrealAirLinuxDriver.tar.gz
+          name: xrealAirLinuxDriver-${{matrix.container}}.tar.gz
+          path: build/xrealAirLinuxDriver-${{matrix.container}}.tar.gz
           compression-level: 0
 
       - name: Add Driver Setup Script 
