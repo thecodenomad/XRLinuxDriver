@@ -91,19 +91,19 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: xrealAirLinuxDriver-fedora-latest.tar.gz      
-          path: artifacts/
+          path: artifacts/xrealAirLinuxDriver-fedora-latest.tar.gz
 
       - name: Download Ubuntu Driver
         uses: actions/download-artifact@v4
         with:
           name: xrealAirLinuxDriver-ubuntu-latest.tar.gz      
-          path: artifacts/
+          path: artifacts/xrealAirLinuxDriver-ubuntu-latest.tar.gz
 
       - name: Download Debian Driver
         uses: actions/download-artifact@v4
         with:
           name: xrealAirLinuxDriver-debian-latest.tar.gz      
-          path: artifacts/
+          path: artifacts/xrealAirLinuxDriver-debian-latest.tar.gz
 
       #########################
       # Create Latest Release #
