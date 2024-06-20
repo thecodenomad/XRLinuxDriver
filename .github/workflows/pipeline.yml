@@ -12,15 +12,18 @@ concurrency:
 
 jobs:
 
-  Linux-Builds:
+  Builds:
     runs-on: ubuntu-latest
+    concurrency:
+      group: build-and-release
+      cancel-in-progress: true
     strategy:
       fail-fast: true
       matrix:
         container:
           - "fedora"
-          - "ubuntu"
-          - "debian"
+#          - "ubuntu"
+#          - "debian"
 
     container: ${{ matrix.container }}:latest
 
@@ -59,12 +62,49 @@ jobs:
           # Build
           ./bin/package
 
-      - name: Create ${{ matrix.container }} Latest Release
+      - name: Add Tarball Artifact
+        if: ${{ !env.ACT }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: xrealAirLinuxDriver-${{matrix.container}}-latest.tar.gz
+          path: build/xrealAirLinuxDriver.tar.gz
+          compression-level: 0
+
+  Release-Latest:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: build-and-release
+      cancel-in-progress: true
+
+    steps:
+      ##################################
+      # Download all created artifacts #
+      ##################################
+
+      - name: Download Fedora Driver
+        uses: actions/download-artifact@v4
+        with:
+          name: xrealAirLinuxDriver-fedora-latest.tar.gz      
+
+      - name: Download Ubuntu Driver
+        uses: actions/download-artifact@v4
+        with:
+          name: xrealAirLinuxDriver-ubuntu-latest.tar.gz      
+
+      - name: Download Debian Driver
+        uses: actions/download-artifact@v4
+        with:
+          name: xrealAirLinuxDriver-debian-latest.tar.gz      
+
+      #########################
+      # Create Latest Release #
+      #########################
+
+      - name: Create Latest Release
         if: ${{ !env.ACT }}
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "build/xrealAirLinuxDriver.tar.gz"
-          name: xrealAirLinuxDriver-${{matrix.container}}-latest.tar.gz
+          artifacts: "xrealAirLinuxDriver*.tar.gz"
           allowUpdates: true
 
 #      - name: Add Tarball Artifact 
