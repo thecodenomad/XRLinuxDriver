@@ -12,15 +12,32 @@ concurrency:
 
 jobs:
 
-  Linux:
+  Linux-Builds:
     runs-on: ubuntu-latest
-    container: fedora:latest
+    strategy:
+      fail-fast: true
+      matrix:
+        container:
+          - "fedora:latest"
+          - "ubuntu:latest"
+
+    container: ${{ matrix.container }}
 
     steps:
-      - name: Install Dependencies
+      - name: Install Fedora Dependencies
+        if: ${{ startsWith(matrix.container, 'fedora') }} 
         run: | 
           dnf install -y cmake gcc git libusb1 libgudev-devel libusbx-devel libevdev-devel openssl-devel json-c-devel libpsl libssh2 python3 python3-pip
           pip3 install pyaml
+
+      - name: Install Ubuntu Dependencies
+        if: ${{ startsWith(matrix.container, 'ubuntu') }} 
+        run: | 
+          TZ="Etc/UTC"
+          DEBIAN_FRONTEND=noninteractive
+          ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+          apt update -y
+          apt install -y cmake gcc git libusb-1.0-0-dev libgudev-1.0-dev libevdev-dev openssl libjson-c-dev libpsl-dev libssh2-1-dev python3 python3-pip python3-yaml
 
       - name: Checkout
         uses: actions/checkout@v4
@@ -31,7 +48,7 @@ jobs:
         run: |
           # Build
           mkdir -p build
-          pushd build
+          cd build
           cmake ..
 
       - name: Package
@@ -42,6 +59,7 @@ jobs:
           ./bin/package
 
       - name: Add Tarball Artifact 
+        if: ${{ !env.ACT }}
         uses: actions/upload-artifact@v4
         with:
           name: xrealAirLinuxDriver.tar.gz
@@ -49,6 +67,7 @@ jobs:
           compression-level: 0
 
       - name: Add Driver Setup Script 
+        if: ${{ !env.ACT }}
         uses: actions/upload-artifact@v4
         with:
           name: xreal_driver_setup
