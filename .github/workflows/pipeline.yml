@@ -76,34 +76,30 @@ jobs:
       # Download all created artifacts #
       ##################################
 
-      - name: Create Artifacts Folder
-        run: |
-          mkdir -p artifacts
+      - name: Download Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+          pattern: xrealAirLinuxDriver-*
+          merge-multiple: true
 
-#      - name: Download Artifacts
+#      - name: Download Fedora Driver
 #        uses: actions/download-artifact@v4
 #        with:
-#          path: artifacts
-#          pattern: xrealAirLinuxDriver-*
-#          merge-multiple: true
-
-      - name: Download Fedora Driver
-        uses: actions/download-artifact@v4
-        with:
-          name: xrealAirLinuxDriver-fedora-latest.tar.gz      
-          path: artifacts/xrealAirLinuxDriver-fedora-latest.tar.gz
-
-      - name: Download Ubuntu Driver
-        uses: actions/download-artifact@v4
-        with:
-          name: xrealAirLinuxDriver-ubuntu-latest.tar.gz      
-          path: artifacts/xrealAirLinuxDriver-ubuntu-latest.tar.gz
-
-      - name: Download Debian Driver
-        uses: actions/download-artifact@v4
-        with:
-          name: xrealAirLinuxDriver-debian-latest.tar.gz      
-          path: artifacts/xrealAirLinuxDriver-debian-latest.tar.gz
+#          name: xrealAirLinuxDriver-fedora-latest.tar.gz      
+#          path: artifacts/xrealAirLinuxDriver-fedora-latest.tar.gz
+#
+#      - name: Download Ubuntu Driver
+#        uses: actions/download-artifact@v4
+#        with:
+#          name: xrealAirLinuxDriver-ubuntu-latest.tar.gz      
+#          path: artifacts/xrealAirLinuxDriver-ubuntu-latest.tar.gz
+#
+#      - name: Download Debian Driver
+#        uses: actions/download-artifact@v4
+#        with:
+#          name: xrealAirLinuxDriver-debian-latest.tar.gz      
+#          path: artifacts/xrealAirLinuxDriver-debian-latest.tar.gz
 
       #########################
       # Create Latest Release #
