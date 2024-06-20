@@ -115,6 +115,7 @@ jobs:
         run: |
           ls -al
           ls -al artifacts/
+          pwd
 
       - name: Create Latest Release
         if: ${{ !env.ACT }}
