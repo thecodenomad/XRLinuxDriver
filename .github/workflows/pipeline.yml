@@ -78,6 +78,7 @@ jobs:
 
       - name: Download Artifacts
         uses: actions/download-artifact@v4
+        with:
           path: artifacts
 
 #      - name: Download Fedora Driver
