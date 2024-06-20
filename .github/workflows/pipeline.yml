@@ -18,8 +18,8 @@ jobs:
       fail-fast: true
       matrix:
         container:
-#          - "fedora"
-#          - "ubuntu"
+          - "fedora"
+          - "ubuntu"
           - "debian"
 
     container: ${{ matrix.container }}:latest
