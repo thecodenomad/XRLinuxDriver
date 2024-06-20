@@ -93,8 +93,8 @@ jobs:
       #########################
       # Create Latest Release #
       #########################
-      - name: Checkout Code
-        uses: actions/checkout@v3
+#      - name: Checkout Code
+#        uses: actions/checkout@v3
 
       - name: Create Latest Release
         if: ${{ !env.ACT }}
@@ -102,6 +102,7 @@ jobs:
         with:
           artifacts: "xrealAirLinuxDriver*.tar.gz"
           allowUpdates: true
+          tag: ${{ github.ref_name }}
 
 #      - name: Add Tarball Artifact 
 #        if: ${{ !env.ACT }}
