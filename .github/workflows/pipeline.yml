@@ -108,8 +108,11 @@ jobs:
       #########################
       # Create Latest Release #
       #########################
-      - name: Checkout Code
-        uses: actions/checkout@v3
+#      - name: Checkout Code
+#        uses: actions/checkout@v3
+
+      - name: List folder contents
+        run: ls -al
 
       - name: Create Latest Release
         if: ${{ !env.ACT }}
