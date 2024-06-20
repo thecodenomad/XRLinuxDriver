@@ -19,8 +19,8 @@ jobs:
       matrix:
         container:
           - "fedora"
-#          - "ubuntu"
-#          - "debian"
+          - "ubuntu"
+          - "debian"
 
     container: ${{ matrix.container }}:latest
 
