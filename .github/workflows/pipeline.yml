@@ -63,7 +63,7 @@ jobs:
         if: ${{ !env.ACT }}
         uses: actions/upload-artifact@v4
         with:
-          name: xrealAirLinuxDriver-${{matrix.container}}-latest.tar
+          name: xrealAirLinuxDriver-${{matrix.container}}-latest
           path: build/xrealAirLinuxDriver.tar
 #          compression-level: 0
 
@@ -78,6 +78,7 @@ jobs:
 
       - name: Download Artifacts
         uses: actions/download-artifact@v4
+          path: artifacts
 
 #      - name: Download Fedora Driver
 #        uses: actions/download-artifact@v4
@@ -106,13 +107,14 @@ jobs:
       - name: List folder contents
         run: |
           ls -al
+          ls -al artifacts
           pwd
 
       - name: Create Latest Release
         if: ${{ !env.ACT }}
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "*-latest.tar.gz,bin/xreal_driver_setup"
+          artifacts: "artifacts/*-latest.tar.gz,bin/xreal_driver_setup"
           allowUpdates: true
           tag: latest
 
