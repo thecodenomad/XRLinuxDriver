@@ -65,7 +65,7 @@ jobs:
         with:
           name: xrealAirLinuxDriver-${{matrix.container}}-latest.tar.gz
           path: build/xrealAirLinuxDriver.tar.gz
-          compression-level: 0
+#          compression-level: 0
 
   Release-Latest:
     runs-on: ubuntu-latest
