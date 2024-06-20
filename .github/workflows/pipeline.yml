@@ -1,0 +1,57 @@
+name: "CI/CD"
+
+# Controls when the action will run. Triggers the workflow on push or pull request events but only for the master branch
+on:
+  push:
+    branches-ignore:
+      - 'main'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+
+  Linux:
+    runs-on: ubuntu-latest
+    container: fedora:latest
+
+    steps:
+      - name: Install Dependencies
+        run: | 
+          dnf install -y cmake gcc git libusb1 libgudev-devel libusbx-devel libevdev-devel openssl-devel json-c-devel libpsl libssh2 python3 python3-pip
+          pip3 install pyaml
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Build
+        run: |
+          # Build
+          mkdir -p build
+          pushd build
+          cmake ..
+
+      - name: Package
+        env: 
+          UA_API_SECRET_INTENTIONALLY_EMPTY: 1
+        run: |
+          # Build
+          ./bin/package
+
+      - name: Add Tarball Artifact 
+        uses: actions/upload-artifact@v4
+        with:
+          name: xrealAirLinuxDriver.tar.gz
+          path: build/xrealAirLinuxDriver.tar.gz
+          compression-level: 0
+
+      - name: Add Driver Setup Script 
+        uses: actions/upload-artifact@v4
+        with:
+          name: xreal_driver_setup
+          path: bin/xreal_driver_setup
+          compression-level: 0
+
