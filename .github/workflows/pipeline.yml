@@ -57,6 +57,7 @@ jobs:
         run: |
           # Build
           ./bin/package
+          mv build/xrealAirLinuxDriver.tar.gz build/xrealAirLinuxDriver-${{matrix.container}}.tar.gz
 
       - name: Add Tarball Artifact
         if: ${{ !env.ACT }}
