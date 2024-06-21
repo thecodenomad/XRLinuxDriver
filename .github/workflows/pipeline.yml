@@ -106,6 +106,8 @@ jobs:
         run: |
           ls -al
           ls -al artifacts
+          ls -al artifacts/fedora
+          ls -al artifacts/ubuntu
           pwd
 
       - name: Create Latest Release
