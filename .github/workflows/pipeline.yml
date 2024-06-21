@@ -63,7 +63,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: build-artifacts-${{matrix.container}}
-          path: build/xrealAirLinuxDriver-${{matrix.container}}.tar
+          path: build/xrealAirLinuxDriver-${{matrix.container}}.tar.gz
 
   Release-Latest:
     runs-on: ubuntu-latest
