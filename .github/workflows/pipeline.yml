@@ -79,7 +79,7 @@ jobs:
       - name: Download Artifacts
         uses: actions/download-artifact@v4
         with:
-          path: artifacts
+          path: build-artifacts
           pattern: build-artifacts-*
           merge-multiple: true
 
@@ -107,7 +107,7 @@ jobs:
       - name: List folder contents
         run: |
           ls -al
-          ls -al artifacts
+          ls -al build-artifacts || echo "crap"
           pwd
 
       - name: Create Latest Release
