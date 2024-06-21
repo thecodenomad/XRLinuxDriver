@@ -115,7 +115,7 @@ jobs:
         if: ${{ !env.ACT }}
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "artifacts/xrealAirLinuxDriver-*.tar,bin/xreal_driver_setup"
+          artifacts: "build-artifacts/xrealAirLinuxDriver-*.tar,bin/xreal_driver_setup"
           allowUpdates: true
           tag: latest
 #      - name: Add Tarball Artifact
