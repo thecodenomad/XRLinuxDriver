@@ -44,9 +44,17 @@ if [ -e "$USER_HOME/.xreal_driver_config" ]; then
   sed -i 's/use_joystick=false/output_mode=mouse/g' "$USER_HOME/.xreal_driver_config"
 fi
 
-if ! lsmod | grep -q uinput; then
+# If in a distrobox, prefix to execute command on host
+LSMOD="lsmod"
+MODPROBE="modprobe"
+if which distrobox-host-exec &> /dev/null; then
+  LSMOD="distrobox-host-exec lsmod"
+  MODPROBE="distrobox-host-exec modprobe"
+fi
+
+if ! "${LSMOD}" | grep -q uinput; then
   echo "Setting up uinput kernel module"
-  modprobe uinput
+  "${MODPROBE}" uinput
 fi
 
 echo "Copying driver binary and scripts to ${USER_HOME}/bin"
