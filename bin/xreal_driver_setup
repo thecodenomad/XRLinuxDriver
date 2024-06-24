@@ -6,6 +6,8 @@
 # exit when any command fails
 set -e
 
+DL_URL=https://github.com/thecodenomad/XRLinuxDriver/releases/download/latest
+
 # Make sure only root can run our script
 if [ "$(id -u)" != "0" ]; then
    echo "This script must be run as root" 1>&2
@@ -29,11 +31,15 @@ else
   binary_path_arg="$1"
 fi
 
+# systemd requires /etc/os-release to exist, so this should work for a majority of distros
+# TODO: add fallback for non-systemd systems
+DETECTED_OS=$(sed -n 's/^ID=\(.*\)/\1/p' < /etc/os-release)
+
 if [ -z "$binary_path_arg" ]
 then
   # download and unzip the latest driver
   echo "Downloading latest release to: ${tmp_dir}/xrealAirLinuxDriver.tar.gz"
-  curl -L -O https://github.com/wheaney/XRLinuxDriver/releases/latest/download/xrealAirLinuxDriver.tar.gz
+  curl -L "${DL_URL}/xrealAirLinuxDriver-${DETECTED_OS}.tar.gz" -o xrealAirLinuxDriver.tar.gz
 else
   if [[ "$binary_path_arg" = /* ]]; then
     abs_path="$binary_path_arg"
