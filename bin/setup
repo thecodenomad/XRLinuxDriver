@@ -44,18 +44,6 @@ if [ -e "$USER_HOME/.xreal_driver_config" ]; then
   sed -i 's/use_joystick=false/output_mode=mouse/g' "$USER_HOME/.xreal_driver_config"
 fi
 
-# Distrobox setup lsmod and modprobe
-if which distrobox-host-exec &> /dev/null; then
-    if ! which lsmod &> /dev/null; then
-        echo "Creating link for lsmod"
-        ln -s /usr/bin/distrobox-host-exec /usr/local/bin/lsmod
-    fi
-    if ! which modprobe &> /dev/null; then
-        echo "Creating link for modprobe"
-        ln -s /usr/bin/distrobox-host-exec /usr/local/bin/modprobe
-    fi
-fi
-
 if ! lsmod | grep -q uinput; then
   echo "Setting up uinput kernel module"
   modprobe uinput
